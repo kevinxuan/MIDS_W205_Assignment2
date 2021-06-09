@@ -75,7 +75,7 @@ It is NOT necessary to get to that data.
 
 Here are some example questions that would be useful to know, but again, you choose your own (1 to 3).These examples are meant to get you started/thinking, they are optional.
 
-1. How many assesstments are in the dataset?
+1. How many assessments are in the dataset?
 2. What's the name of your Kafka topic? How did you come up with that name?
 3. How many people took *Learning Git*?
 4. What is the least common course taken? And the most common?
