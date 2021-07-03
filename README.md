@@ -89,7 +89,7 @@ We should see something like:
     to login with a token:
         http://0.0.0.0:7000/?token=52ad2b41c9b8a18eaccd0771bdb8c93fe4fdb55d2b7b3e53
 ```
-The output indicates that we have successfully started the cluster. For our instance, our static external IP address is `34.81.138.56` with port number `7000`, so to run pyspark with jupyter we open a new web page and access URL `34.81.138.56:7000`. 
+The output indicates that we have successfully started the cluster. For our instance, our static external IP address is `34.81.138.56` with port number `7000`, so to run pyspark with jupyter we open a new browser and access URL `34.81.138.56:7000`. 
 Note: we maybe asked for the token number to access our jupyter instance, and we just copy and paste the token from the output on the last line above to access. We will then be directed to the jupyter platform, and now we open `Kevin_pyspark_Jupyter.ipynb` to start the process of 'consuming message with spark'.
 
 To see how I have transformed data inside Spark, please check out `Kevin_Pyspark_Jupyter.ipynb`.
