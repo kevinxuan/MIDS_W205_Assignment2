@@ -1,0 +1,9 @@
+  568  curl -L -o assessment-attempts-20180128-121051-nested.json https://goo.gl/ME6hjp
+  569  docker-compose up -d
+  570  docker-compose ps
+  571  docker-compose exec cloudera hadoop fs -ls /tmp/
+  572  docker-compose exec kafka kafka-topics --create --topic student-assessment --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:32181
+  573  docker-compose exec mids bash -c "cat /w205/project-2-kevinxuan/assessment-attempts-20180128-121051-nested.json | jq '.[]' -c | kafkacat -P -b kafka:29092 -t student-assessment"
+  574  docker-compose exec spark env PYSPARK_DRIVER_PYTHON=jupyter PYSPARK_DRIVER_PYTHON_OPTS='notebook --no-browser --port 7000 --ip 0.0.0.0 --allow-root --notebook-dir=/w205/' pyspark
+  575  docker-compose exec cloudera hadoop fs -ls /tmp/
+  576  docker-compose down

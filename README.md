@@ -10,7 +10,7 @@ The following will be step by step procedures on to achieve our objective of con
 
 To begin, we are given a dataset named "assessment-attempts-20180128-121051-nested.json", a json file containing information about an exam such as the name of the exam and the time in which exam is taken. To get the dataset, run
 ```
-curl -L -o assessment-attempts-20180128-121051-nested.json https://goo.gl/ME6hjp`
+curl -L -o assessment-attempts-20180128-121051-nested.json https://goo.gl/ME6hjp
 ```
 to download the dataset.
 
@@ -21,7 +21,21 @@ To spin up all these clusters, run
 ```
 docker-compose up -d
 ```
-You should see all clusters being initiated with green colored "done" on the right.
+we should see all clusters being initiated with green colored "done" on the right. We can check if all our clusters have been initated by running
+```
+docker-compose ps
+```
+and we should see
+```
+             Name                          Command            State                             Ports                          
+-------------------------------------------------------------------------------------------------------------------------------
+project-2-kevinxuan_cloudera_1    cdh_startup_script.sh       Up      11000/tcp, 11443/tcp, 19888/tcp, 50070/tcp, 8020/tcp,    
+                                                                      8088/tcp, 8888/tcp, 9090/tcp                             
+project-2-kevinxuan_kafka_1       /etc/confluent/docker/run   Up      29092/tcp, 9092/tcp                                      
+project-2-kevinxuan_mids_1        /bin/bash                   Up      8888/tcp                                                 
+project-2-kevinxuan_spark_1       docker-entrypoint.sh bash   Up      0.0.0.0:7000->7000/tcp,:::7000->7000/tcp                 
+project-2-kevinxuan_zookeeper_1   /etc/confluent/docker/run   Up      2181/tcp, 2888/tcp, 32181/tcp, 3888/tcp      
+```
 
 
 ### Check out Hadoop
@@ -78,8 +92,10 @@ We should see something like:
 The output indicates that we have successfully started the cluster. For our instance, our static external IP address is `34.81.138.56` with port number `7000`, so to run pyspark with jupyter we open a new web page and access URL `34.81.138.56:7000`. 
 Note: we maybe asked for the token number to access our jupyter instance, and we just copy and paste the token from the output on the last line above to access. We will then be directed to the jupyter platform, and now we open `Kevin_pyspark_Jupyter.ipynb` to start the process of 'consuming message with spark'.
 
+To see how I have transformed data inside Spark, please check out `Kevin_Pyspark_Jupyter.ipynb`.
+
 ### Check out Hadoop again
-After consuming message with Spark, transforming the data to a structured table, and saving the table to HDFS, we run
+After consuming message with Spark, transforming the data to a structured table, and saving the table to HDFS, we can press `CTRL+C` to stop the spark cluster. Then we run
 ```
 docker-compose exec cloudera hadoop fs -ls /tmp/
 ```
@@ -97,4 +113,19 @@ Now we have completed the stage of setting up clusters, creating kafka topic, pu
 ```
 docker-compose down
 ```
+You should see something like:
+```
+Stopping project-2-kevinxuan_spark_1     ... done
+Stopping project-2-kevinxuan_kafka_1     ... done
+Stopping project-2-kevinxuan_zookeeper_1 ... done
+Stopping project-2-kevinxuan_mids_1      ... done
+Stopping project-2-kevinxuan_cloudera_1  ... done
+Removing project-2-kevinxuan_spark_1     ... done
+Removing project-2-kevinxuan_kafka_1     ... done
+Removing project-2-kevinxuan_zookeeper_1 ... done
+Removing project-2-kevinxuan_mids_1      ... done
+Removing project-2-kevinxuan_cloudera_1  ... done
+Removing network project-2-kevinxuan_default
+```
+This means that we have successfully shut off all clusters.
 #### Note: Please DON'T run the command above if you have not finished the project. Once all the clusters are shut down, all the data in the containers such as the Kafka topic "student-assessment" and the table "/tmp/exam" in HDFS will be removed. 
