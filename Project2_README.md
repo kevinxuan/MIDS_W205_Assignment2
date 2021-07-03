@@ -84,3 +84,17 @@ After consuming message with Spark, transforming the data to a structured table,
 docker-compose exec cloudera hadoop fs -ls /tmp/
 ```
 and should see the following:
+```
+Found 3 items
+drwxr-xr-x   - root   supergroup          0 2021-07-03 08:30 /tmp/exam
+drwxrwxrwt   - mapred mapred              0 2018-02-06 18:27 /tmp/hadoop-yarn
+drwx-wx-wx   - root   supergroup          0 2021-07-03 06:37 /tmp/hive
+```
+Here, we see that compared to before we have an extra file named `/tmp/exam`. This indicates that we have successfully land our transformed table in which we have conducted transformation in Pyspark into HDFS. If we want to conduct data analysis in a later stage, we can access the data in HDFS by calling `read_parquet` in Pyspark. 
+
+## Conclusion
+Now we have completed the stage of setting up clusters, creating kafka topic, publishing message with kafkacat into topic, consuming message and transforming data to structured table with Pyspark, saving structured table into HDFS, and answering the business questions in which we are curious. Once we are done with this project, we need to shut off all these clusters to stop using all these hardware resources. To turn off all clusters, run
+```
+docker-compose down
+```
+#### Note: Please DON'T run the command above if you have not finished the project. Once all the clusters are shut down, all the data in the containers such as the Kafka topic "student-assessment" and the table "/tmp/exam" in HDFS will be removed. 
